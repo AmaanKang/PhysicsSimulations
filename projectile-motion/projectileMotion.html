@@ -2,15 +2,26 @@
 <html>
 <head>
     <title>Projectile Motion Simulation</title>
-    <style>
-        
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="projectileMotion.css">
+    <script src="projectileMotion.js"></script>
 </head>
 <body>
-    <h1>Projectile Motion Simulation</h1>
-    <canvas id="canvas"></canvas>
-    <script>
-        
-    </script>
+        <h1>Projectile Motion Simulation</h1>
+        <p>Projectile motion refers to the motion of an object that is thrown or projected into the air. The motion is dependent on the gravity and air resistance.
+           Thus, a projectile will fllow a different motion if any of these factors change - Speed of throw, Angle of throw, Gravity in that place and the air resistance.
+            This simulation will help understand how the motion of a projectile changes with the change in speed and angle of throw. You can control these two factors
+            easily but the gravity and air resistance are controlled by environment, hence these cannot be easily controlled.
+        </p>
+        <form>
+            <label for="speed">Speed (m/s)</label>
+            <input type="number" id="speed" name="speed" value=100 required>
+            <label for="angle">Angle (degrees):</label>
+            <input type="number" id="angle" name="angle" value=45 required>
+            <button type="button" onclick="simulateProjectile()">Simulate</button>
+            <button type="button" onclick="clearAll()">Clear</button>
+        </form>
+    
+    
 </body>
 </html>
