@@ -1,0 +1,12 @@
+body{
+    font-family: Arial, sans-serif;
+    margin:2%;
+    text-align: center;
+}
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
+}
+.gallery .simulation-card{
+    margin: 5%;
+}
