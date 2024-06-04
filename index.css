@@ -7,6 +7,9 @@ body{
     display: flex;
     flex-wrap: wrap;
 }
-.gallery .simulation-card{
-    margin: 5%;
+.simulation-card{
+    margin: 2%;
+    border: 1px solid #ccc;
+    padding: 2%;
+    width: 25%;
 }
