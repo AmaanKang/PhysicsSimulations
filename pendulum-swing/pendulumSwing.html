@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../index.css">
-    <script></script>
+    <script src="pendulumSwing.js"></script>
 </head>
 <body>
     <h1>Pendulum Swing</h1>
     <p>A pendulum swing refers to the motion of a pendulum, which is a weight suspended from a pivot so that it can swing freely. When a pendulum is displaced sideways from its resting equilibrium position, it is subject to a restoring force due to gravity that 
         will accelerate it back toward the equilibrium position. When released, the restoring force combined with the pendulum's mass causes it to oscillate about the equilibrium position, swinging back and forth.
     The period of a simple pendulum, which is the time it takes for one complete cycle of motion, depends only on the length of the pendulum and the acceleration due to gravity. The mass of the pendulum bob does not affect the period.</p>
+    
+        <label for="length">Length of Pendulum (unit):</label>
+        <input type="number" id="length" name="length" value="60" min="10" max="98" onchange="this.value = Math.max(this.min, Math.min(this.max, this.value))">
+        <label for="Angle">Angle of Pendulum Bob (degrees):</label>
+        <input type="number" id="angle" name="angle" value="40" min="10" max="100" onchange="this.value = Math.max(this.min, Math.min(this.max, this.value))">
+        <button class="btn btn-primary" onclick="startSwing()">Submit</button>
+    <br/>
+    <br/>
     <div></div>
 </body>
 </html>

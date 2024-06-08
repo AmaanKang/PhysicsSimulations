@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas = document.createElement("div");
     canvas.className = "canvas";
     canvas.style.position = "relative";
-    canvas.style.margin = "3% 3% 3% 3%";
     canvas.style.width = "100%";
     canvas.style.height = "80%";
     canvas.style.border = "1px solid black";
