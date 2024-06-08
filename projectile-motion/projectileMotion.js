@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.style.width = "100%";
     canvas.style.height = "80%";
     canvas.style.border = "1px solid black";
+    canvas.style.backgroundColor = "lightblue";
     document.body.appendChild(canvas);
 });
 
@@ -76,7 +77,7 @@ function simulateProjectile(){
                 div.style.position = "absolute";
                 div.style.width = "1%";
                 div.style.height = "1%";
-                div.style.backgroundColor = "black";
+                div.style.backgroundColor = "green";
                 div.style.left = x + "px";
                 div.style.top = y + "px";
 

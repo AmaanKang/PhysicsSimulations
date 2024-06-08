@@ -3,7 +3,8 @@
 <head>
     <title>Projectile Motion Simulation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="projectileMotion.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../index.css">
     <script src="projectileMotion.js"></script>
 </head>
 <body>
@@ -18,8 +19,8 @@
             <input type="number" id="speed" name="speed" value=100 required>
             <label for="angle">Angle (degrees):</label>
             <input type="number" id="angle" name="angle" value=45 required>
-            <button type="button" onclick="simulateProjectile()">Simulate</button>
-            <button type="button" onclick="clearAll()">Clear</button>
+            <button type="button" onclick="simulateProjectile()" class="btn btn-primary">Simulate</button>
+            <button type="button" onclick="clearAll()" class="btn btn-danger">Clear</button>
         </form>
     
     
