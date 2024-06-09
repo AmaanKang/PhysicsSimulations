@@ -2,14 +2,8 @@ var pendulum;
 
 document.addEventListener("DOMContentLoaded", function(){
     // The canvas for the pendulum
-    document.body.style.height = "100vh";
     var canvas = document.createElement("div");
     canvas.className = "canvas";
-    canvas.style.position = "relative";
-    canvas.style.backgroundColor = "lightblue";
-    canvas.style.width = "100%";
-    canvas.style.height = "80%";
-    canvas.style.border = "1px solid black";
     document.body.appendChild(canvas);
 
     // Drawing pendulum inside the canvas box

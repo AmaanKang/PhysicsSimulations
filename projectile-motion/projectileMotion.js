@@ -1,14 +1,8 @@
 var canvas;
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.body.style.height = "100vh";
     canvas = document.createElement("div");
     canvas.className = "canvas";
-    canvas.style.position = "relative";
-    canvas.style.width = "100%";
-    canvas.style.height = "80%";
-    canvas.style.border = "1px solid black";
-    canvas.style.backgroundColor = "lightblue";
     document.body.appendChild(canvas);
 });
 
