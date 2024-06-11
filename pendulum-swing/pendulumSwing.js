@@ -22,6 +22,18 @@ document.addEventListener("DOMContentLoaded", function(){
     // Transition CSS property helps in setting up the pendulum's fixed motion. This means that when the transform property is changed, instead of the change happening instantly, it will smoothly transition over 1 second.
     pendulum.style.transition = "transform 1s";
 
+    // Drawing ball at bottom of the pendulum
+    var ball = document.createElement("div");
+    ball.className = "ball";
+    ball.style.position = "absolute";
+    ball.style.backgroundColor = "black";
+    ball.style.width = "300%";
+    ball.style.height = "7%";
+    ball.style.borderRadius = "50%";
+    ball.style.top = "98%";
+    ball.style.transform = "translateX(-30%)";
+    pendulum.appendChild(ball);
+
     canvas.appendChild(pendulum);
 });
 
