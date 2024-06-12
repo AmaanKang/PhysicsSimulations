@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", function(){
     // Draw two slits on the canvas
     drawSlits(ctx, canvasE.width, canvasE.height);
 
+    // Create a wave source that emits particles
+    var waveSource = new WaveSource();
+    var particle = waveSource.emitParticle;
+    var moveParticle = particle.move;
+    var drawParticle = particle.draw;
 });
 
 // Draw two slits on the canvas
@@ -35,12 +40,19 @@ function WaveSource(){
 
 function Particle(){
     this.x = 0;
-    this.y = 0;
+    this.y = window.innerHeight / 2; // Start from the middle of the screen
 
-    this.move = function(){
+    this.speed = 2; // Speed of the particle
+    this.radius = 5; // Radius of the particle
 
-    }
-    this.draw = function(ctx){
+    this.move = function() {
+        this.x += this.speed; // Move the particle to the right
+    };
 
-    }
+    this.draw = function(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = "black";
+        ctx.fill();
+    };
 }
