@@ -6,35 +6,52 @@ document.addEventListener("DOMContentLoaded", function(){
     document.body.appendChild(canvasE);
     var ctx = canvasE.getContext("2d");
 
-    // Draw two slits on the canvas
-    drawSlits(ctx, canvasE.width, canvasE.height);
-
     // Create a wave source that emits particles
     var waveSource = new WaveSource();
-    var particle = waveSource.emitParticle;
-    var moveParticle = particle.move;
-    var drawParticle = particle.draw;
+
+    // Start the simulation
+    setInterval(function() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvasE.width, canvasE.height);
+
+        // Draw two slits on the canvas
+        drawSlits(ctx, canvasE.width, canvasE.height);
+
+        // Emit a particle from the wave source
+        waveSource.emitParticle();
+
+        // Update and draw each particle
+        for (var i = 0; i < waveSource.particles.length; i++) {
+            var particle = waveSource.particles[i];
+            particle.move();
+            particle.draw(ctx);
+        }
+    }, 1000 / 60); // Run the simulation at 60 frames per second
 });
 
 // Draw two slits on the canvas
 function drawSlits(ctx, canvasWidth, canvasHeight){
     var slitWidth = 10;
-    var slitHeight = canvasHeight/3; // There will be 3 equal length rectangles, out of which 2 will be slits and the 3rd will be spacing between them
+    var slitHeight = canvasHeight/3;
     var slitSpacing = canvasHeight/3;
 
     ctx.fillStyle = "black";
     ctx.fillRect(canvasWidth/2-slitWidth/2, 0, slitWidth, slitHeight); // (x,y,width,height)
     ctx.fillRect(canvasWidth/2-slitWidth/2, slitHeight+slitSpacing, slitWidth, slitHeight); // (x,y,width,height)
+    ctx.fillRect(canvasWidth/2-slitWidth/2, slitHeight+(slitHeight/10), slitWidth, slitHeight-(slitHeight/5)); // (x,y,width,height)
 }
 
 function WaveSource(){
     this.particles = [];
 
     // Create particles and emit these from source
-    this.emitParticle = function(){
-        var particle = new Particle();
-        this.particles.push(particle);
-        return particle;
+    this.emitParticle = function() {
+        var beamWidth = 50; // Width of the light beam
+        for (var i = 0; i < beamWidth; i++) {
+            var particle = new Particle();
+            particle.y = window.innerHeight / 2 - beamWidth / 2 + i; // Position the particles to form a beam
+            this.particles.push(particle);
+        }
     }
 }
 
@@ -44,15 +61,31 @@ function Particle(){
 
     this.speed = 2; // Speed of the particle
     this.radius = 5; // Radius of the particle
+    this.angle = 0; // Angle of movement, 0 means the particle is moving to the right
 
     this.move = function() {
-        this.x += this.speed; // Move the particle to the right
+        // If the particle reaches the slits, split it into two particles moving at different angles
+        var slit1Y = window.innerHeight / 3;
+        var slit2Y = 2 * window.innerHeight / 3;
+        var canvasWidth = window.innerWidth;
+        var slitWidth = 10;
+        if (this.x === (canvasWidth / 2 - slitWidth / 2) && (this.y === slit1Y || this.y === slit2Y)) {
+            var particle1 = new Particle();
+            particle1.angle = -Math.PI / 4; // Particle moves at an angle of -45 degrees
+            var particle2 = new Particle();
+            particle2.angle = Math.PI / 4; // Particle moves at an angle of 45 degrees
+            waveSource.particles.push(particle1, particle2);
+        } else {
+            // Move the particle in the direction specified by this.angle
+            this.x += this.speed * Math.cos(this.angle);
+            this.y += this.speed * Math.sin(this.angle);
+        }
     };
 
-    this.draw = function(ctx) {
+    this.draw = function(ctx) { // Draw the particle which has circular shape
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "yellow";
         ctx.fill();
     };
 }
