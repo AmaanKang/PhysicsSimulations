@@ -19,12 +19,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
         // Emit a particle from the wave source
         waveSource.emitParticle();
-
+        var canvasWidth = window.innerWidth;
+        var slitWidth = 10;
         // Update and draw each particle
         for (var i = 0; i < waveSource.particles.length; i++) {
             var particle = waveSource.particles[i];
-            particle.move();
-            particle.draw(ctx);
+            if(particle.x < (canvasWidth / 2 - slitWidth / 2)){
+                particle.move();
+                particle.draw(ctx);
+            }
         }
     }, 1000 / 60); // Run the simulation at 60 frames per second
 });
@@ -59,27 +62,28 @@ function Particle(){
     this.x = 0;
     this.y = window.innerHeight / 2; // Start from the middle of the screen
 
-    this.speed = 2; // Speed of the particle
+    this.speed = 4; // Speed of the particle
     this.radius = 5; // Radius of the particle
     this.angle = 0; // Angle of movement, 0 means the particle is moving to the right
 
     this.move = function() {
-        // If the particle reaches the slits, split it into two particles moving at different angles
+        // Move the particle in the direction specified by this.angle
+        this.x += this.speed * Math.cos(this.angle);
+        this.y += this.speed * Math.sin(this.angle);
+        /** If the particle reaches the slits, split it into two particles moving at different angles
         var slit1Y = window.innerHeight / 3;
         var slit2Y = 2 * window.innerHeight / 3;
         var canvasWidth = window.innerWidth;
         var slitWidth = 10;
-        if (this.x === (canvasWidth / 2 - slitWidth / 2) && (this.y === slit1Y || this.y === slit2Y)) {
+        if (this.x === (canvasWidth / 2 - slitWidth / 2)) {
             var particle1 = new Particle();
             particle1.angle = -Math.PI / 4; // Particle moves at an angle of -45 degrees
             var particle2 = new Particle();
             particle2.angle = Math.PI / 4; // Particle moves at an angle of 45 degrees
             waveSource.particles.push(particle1, particle2);
         } else {
-            // Move the particle in the direction specified by this.angle
-            this.x += this.speed * Math.cos(this.angle);
-            this.y += this.speed * Math.sin(this.angle);
-        }
+            
+        }*/
     };
 
     this.draw = function(ctx) { // Draw the particle which has circular shape
