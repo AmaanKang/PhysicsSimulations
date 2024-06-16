@@ -78,12 +78,12 @@ function Particle(){
             var particle1 = new Particle();
             particle1.angle = -Math.PI / 4; // Particle moves at an angle of -45 degrees
             particle1.x += this.speed * Math.cos(this.angle) + this.x;
-            particle1.y += this.speed * Math.sin(this.angle);
+            particle1.y += this.speed * Math.sin(this.angle) - slit1Y/2;
 
             var particle2 = new Particle();
             particle2.angle = Math.PI / 4; // Particle moves at an angle of 45 degrees
             particle2.x += this.speed * Math.cos(this.angle) + this.x;
-            particle2.y += this.speed * Math.sin(this.angle);
+            particle2.y += this.speed * Math.sin(this.angle) + slit1Y/2;
 
             waveSource.particles.push(particle1, particle2);
 
