@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // Update and draw each particle
         for (var i = 0; i < waveSource.particles.length; i++) {
             var particle = waveSource.particles[i];
-            particle.move();
+            particle.move(ctx);
             particle.draw(ctx);
         }
     }, 1000 / 60); // Run the simulation at 60 frames per second
@@ -63,9 +63,10 @@ function Particle(){
 
     this.speed = 4; // Speed of the particle
     this.radius = 5; // Radius of the particle
+    this.newRadius = 0;
     this.angle = 0; // Angle of movement, 0 means the particle is moving to the right
 
-    this.move = function() {
+    this.move = function(ctx) {
         var slit1Y = window.innerHeight / 3;
         var slit2Y = 2 * window.innerHeight / 3;
         var slitHeight = 10;
@@ -93,10 +94,25 @@ function Particle(){
                 waveSource.particles.splice(index, 1);
             }
             //}
+            // Increase the radius of the particle over time
+            this.newRadius += this.speed;
+
+            // Draw the particle as a semi-circle
+            ctx.beginPath();
+            ctx.arc(particle1.x, particle1.y, this.newRadius, this.angle - Math.PI / 2, this.angle + Math.PI / 2);
+            ctx.stroke();
+
+            // Draw the particle as a semi-circle
+            ctx.beginPath();
+            ctx.arc(particle2.x, particle2.y, this.newRadius, this.angle - Math.PI / 2, this.angle + Math.PI / 2);
+            ctx.stroke();
+        }else{
+            // Move the particle in the direction specified by this.angle
+            this.x += this.speed * Math.cos(this.angle);
+            this.y += this.speed * Math.sin(this.angle);
         }
-        // Move the particle in the direction specified by this.angle
-        this.x += this.speed * Math.cos(this.angle);
-        this.y += this.speed * Math.sin(this.angle);
+
+        
         
     };
 
