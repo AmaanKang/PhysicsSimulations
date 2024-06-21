@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
     waveSource = new WaveSource();
 
     // Start the simulation
-    setInterval(function() {
+    var runSimulation = setInterval(function() {
         // Clear the canvas
         ctx.clearRect(0, 0, canvasE.width, canvasE.height);
 
@@ -23,12 +23,18 @@ document.addEventListener("DOMContentLoaded", function(){
         waveSource.emitParticle();
         var canvasWidth = window.innerWidth;
         var slitWidth = 10;
+        var newRadius = 0;
         // Update and draw each particle
         for (var i = 0; i < waveSource.particles.length; i++) {
             var particle = waveSource.particles[i];
-            particle.move();
+            newRadius = particle.move();
+            if(newRadius > canvasWidth/2){
+                clearInterval(runSimulation);
+                console.log("Stopped");
+            }
             particle.draw(ctx);
         }
+        
     }, 1000 / 60); // Run the simulation at 60 frames per second
 });
 
@@ -93,14 +99,15 @@ function Particle(){
             particle2.split = true;
 
             // Set the radius of the particles
-            particle1.newRadius += this.newRadius + 10;
-            particle2.newRadius += this.newRadius + 10;
+            this.newRadius += 50;
+            if(this.newRadius > 100){
+                console.log(this.newRadius);
+            }
+            particle1.newRadius = this.newRadius;
+            particle2.newRadius = this.newRadius;
 
             waveSource.particles.push(particle1, particle2);
-            num++;
-            console.log(": "+num);
-            console.log(waveSource.particles.length);
-
+           
             this.hasSplit = true;
 
             // Remove the original particle
@@ -115,6 +122,7 @@ function Particle(){
             this.x += this.speed * Math.cos(this.angle);
             this.y += this.speed * Math.sin(this.angle);
         }
+        return this.newRadius;
     };
 
     this.draw = function(ctx) { 
