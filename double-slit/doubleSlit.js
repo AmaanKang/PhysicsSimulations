@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function(){
         // Emit a particle from the wave source
         waveSource.emitParticle();
         var canvasWidth = window.innerWidth;
-        var slitWidth = 10;
         var newRadius = 0;
         // Update and draw each particle
         for (var i = 0; i < waveSource.particles.length; i++) {
@@ -38,11 +37,12 @@ document.addEventListener("DOMContentLoaded", function(){
     }, 1000 / 60); // Run the simulation at 60 frames per second
 });
 
+var slitWidth = 10;
+var slitHeight = window.innerHeight/3;
+var slitSpacing = window.innerHeight/3;
+
 // Draw two slits on the canvas
 function drawSlits(ctx, canvasWidth, canvasHeight){
-    var slitWidth = 10;
-    var slitHeight = canvasHeight/3;
-    var slitSpacing = canvasHeight/3;
 
     ctx.fillStyle = "black";
     ctx.fillRect(canvasWidth/2-slitWidth/2, 0, slitWidth, slitHeight); // (x,y,width,height)
@@ -69,30 +69,27 @@ function Particle(){
     this.y = window.innerHeight / 2; // Start from the middle of the screen
 
     this.speed = 4; // Speed of the particle
-    this.radius = 5; // Radius of the particle
+    this.radius = 10; // Radius of the particle
     this.newRadius = 10;
     this.angle = 0; // Angle of movement, 0 means the particle is moving to the right
     this.split = false;
 
     this.move = function() {
-        var slit1Y = window.innerHeight * 2;
-        var slit2Y = window.innerHeight * 2;
-        var slitHeight = 10;
+        var slit1Y = slitHeight;
         var canvasWidth = window.innerWidth;
-        var slitWidth = 10;
 
         // If the particle reaches the slits and its y-coordinate is within the range of either slit, split it
-        if (this.x >= (canvasWidth / 2 - slitWidth / 2) && this.newRadius <= canvasWidth/2) {
+        if (this.x >= (canvasWidth / 2 - slitWidth/2) && this.newRadius <= canvasWidth/2) {
             //if ((this.y >= slit1Y && this.y <= slit1Y + slitHeight) || (this.y >= slit2Y && this.y <= slit2Y + slitHeight)) {
             var particle1 = new Particle();
-            particle1.angle = -Math.PI / 15; // Particle moves at an angle of -45 degrees
+            particle1.angle = Math.PI / 15; // Particle moves at an angle of -45 degrees
             particle1.x = ((canvasWidth / 2 - slitWidth / 2) + slitWidth)  * Math.cos(this.angle);
-            particle1.y = slit1Y * Math.sin(this.angle);
+            particle1.y = slit1Y * 5 * Math.sin(this.angle);
 
             var particle2 = new Particle();
             particle2.angle = Math.PI / 15; // Particle moves at an angle of 45 degrees
             particle2.x = ((canvasWidth / 2 - slitWidth / 2) + slitWidth)  * Math.cos(this.angle);
-            particle2.y = slit1Y * 2 * Math.sin(this.angle);
+            particle2.y = slit1Y * 9 * Math.sin(this.angle);
 
             // Indicate that the particles should split
             particle1.split = true;
@@ -100,7 +97,7 @@ function Particle(){
 
             // Set the radius of the particles
             this.newRadius += 50;
-            if(this.newRadius > 100){
+            if(this.newRadius > 500){
                 console.log(this.newRadius);
             }
             particle1.newRadius = this.newRadius;
@@ -117,7 +114,7 @@ function Particle(){
             }
             //}
 
-        }else if(this.x < (canvasWidth / 2 - slitWidth / 2)){
+        }else if(this.x < (canvasWidth / 2 - slitWidth/2)){
             // Move the particle in the direction specified by this.angle
             this.x += this.speed * Math.cos(this.angle);
             this.y += this.speed * Math.sin(this.angle);
@@ -130,7 +127,7 @@ function Particle(){
 
         if(this.split){
             // Draw the particle as a semi-circle
-            ctx.arc(this.x, this.y, this.newRadius, this.angle - Math.PI / 2, this.angle + Math.PI / 2, false);
+            ctx.arc(this.x, this.y, this.newRadius, this.angle - Math.PI/3, this.angle + Math.PI/4, false);
             ctx.stroke();
         }else if(!this.split){
             // Draw the particle as a full circle
