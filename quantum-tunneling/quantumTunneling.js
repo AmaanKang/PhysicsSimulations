@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // Parameters
     let amplitude = 50;
-    let wavelength = 20;
-    let speed = 2;
+    let wavelength = 30;
+    let speed = 5;
     let barrierX = canvas.width / 2;
     let barrierWidth = 10;
     let barrierHeight = 80;
